@@ -1,2 +1,8 @@
-# sonovia
-Audio visualizer built with Bolt. Upload your own tracks or try Suno demos, then choose from over 10 real-time reactive visualizations. You can also use your mic to speak, hum, or beatbox and watch the visuals respond instantly. Customize sensitivity, motion, and color to match your vibe
+# Sonovia
+Audio visualizer, vibe coded using Bolt.
+
+🎧 Upload your own tracks or pick from a few Suno demos, then choose from 10+ immersive visualizations that react in real time.
+
+🎤 Got something to say? Grab the mic and watch the visuals respond to your voice. Beatbox, hum, or just vibe out.
+
+🎨 Tweak sensitivity, motion, and colors to match your mood.
