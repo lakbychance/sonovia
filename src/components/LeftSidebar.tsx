@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { Upload, Lock, ExternalLink, AlertTriangle, Mic, MicOff, Loader2, Play, Download } from 'lucide-react';
+import { Upload, Lock, ExternalLink, AlertTriangle, Mic, MicOff, Loader2, Play } from 'lucide-react';
 import { AudioData, demoSongs } from '../types/audio';
-import { showCustomToast } from '../utils/toastUtils';
 
 interface LeftSidebarProps {
   selectedFile: AudioData | null;
@@ -24,7 +23,6 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDraggingFile, setIsDraggingFile] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -44,71 +42,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
     }
   };
 
-  const convertToAudioFile = async (arrayBuffer: ArrayBuffer, filename: string): Promise<File> => {
-    const audioContext = new AudioContext();
-    
-    // Decode the audio data
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    
-    // Create an offline context for rendering
-    const offlineContext = new OfflineAudioContext(
-      audioBuffer.numberOfChannels,
-      audioBuffer.length,
-      audioBuffer.sampleRate
-    );
-    
-    // Create a buffer source
-    const source = offlineContext.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(offlineContext.destination);
-    source.start();
-    
-    // Render the audio
-    const renderedBuffer = await offlineContext.startRendering();
-    
-    // Convert AudioBuffer to WAV format
-    const numberOfChannels = renderedBuffer.numberOfChannels;
-    const length = renderedBuffer.length * numberOfChannels * 2;
-    const buffer = new ArrayBuffer(44 + length);
-    const view = new DataView(buffer);
-    
-    // Write WAV header
-    const writeString = (view: DataView, offset: number, string: string) => {
-      for (let i = 0; i < string.length; i++) {
-        view.setUint8(offset + i, string.charCodeAt(i));
-      }
-    };
-    
-    writeString(view, 0, 'RIFF');
-    view.setUint32(4, 36 + length, true);
-    writeString(view, 8, 'WAVE');
-    writeString(view, 12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    view.setUint16(22, numberOfChannels, true);
-    view.setUint32(24, renderedBuffer.sampleRate, true);
-    view.setUint32(28, renderedBuffer.sampleRate * numberOfChannels * 2, true);
-    view.setUint16(32, numberOfChannels * 2, true);
-    view.setUint16(34, 16, true);
-    writeString(view, 36, 'data');
-    view.setUint32(40, length, true);
-    
-    // Write audio data
-    const offset = 44;
-    for (let i = 0; i < renderedBuffer.length; i++) {
-      for (let channel = 0; channel < numberOfChannels; channel++) {
-        const sample = Math.max(-1, Math.min(1, renderedBuffer.getChannelData(channel)[i]));
-        view.setInt16(offset + (i * numberOfChannels + channel) * 2, sample * 0x7FFF, true);
-      }
-    }
-    
-    // Create WAV file
-    const wavBlob = new Blob([buffer], { type: 'audio/wav' });
-    return new File([wavBlob], `${filename}.wav`, { type: 'audio/wav' });
-  };
-
   return (
-    <div
+    <aside
       className="w-full lg:w-[300px] lg:h-full px-4 lg:p-4 flex flex-col space-y-4 overflow-y-auto"
     >
       <div className="flex items-center space-x-2 mb-2 flex-shrink-0">
@@ -255,7 +190,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
           <p className="leading-tight">Epilepsy caution: flashing visuals</p>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 

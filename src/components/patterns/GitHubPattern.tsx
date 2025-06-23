@@ -6,7 +6,6 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { Text, OrbitControls, Environment } from '@react-three/drei';
 import { Toaster } from 'sonner';
 import { showCustomToast } from '../../utils/toastUtils';
-import { Search, Loader2 } from 'lucide-react';
 import { AudioAnalysisData, VisualizationConfig } from '../../types/audio';
 import { hexToHSL } from '../../utils/colorUtils';
 
@@ -660,7 +659,7 @@ const GitHubPattern: React.FC<GitHubPatternProps> = ({
         }
     };
 
-  const toasterPosition = document.documentElement.clientWidth >= 1024 ? 'bottom-right' : 'top-center';
+    const toasterPosition = document.documentElement.clientWidth >= 1024 ? 'bottom-right' : 'top-center';
 
     return (
         <motion.div
@@ -669,12 +668,12 @@ const GitHubPattern: React.FC<GitHubPatternProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             className="absolute inset-0 bg-gradient-to-b from-black/70 via-zinc-900 to-black/70"
-          onClick={e => e.stopPropagation()}
-               
+            onClick={e => e.stopPropagation()}
+
         >
             <Toaster position={toasterPosition} />
             {/* Minimal input field and icon button */}
-           <div
+            <div
                 onDoubleClick={e => e.stopPropagation()}
                 className={`
                 group absolute top-2 right-2 md:left-4 md:top-4 md:right-auto z-10 rounded-lg shadow-xl

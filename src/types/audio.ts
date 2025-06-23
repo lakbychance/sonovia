@@ -1,4 +1,3 @@
-import React from 'react';
 
 export interface AudioAnalysisData {
   frequencyData: Uint8Array;

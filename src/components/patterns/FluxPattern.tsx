@@ -164,7 +164,7 @@ const vertexShader = `
   }
 `;
 
-const lerp = (start, end, factor) => {
+const lerp = (start: number, end: number, factor: number) => {
   return start * (1 - factor) + end * factor;
 };
 
@@ -181,18 +181,18 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const timeRef = useRef(0);
   const frameIdRef = useRef<number>(0);
-  const [fps, setFps] = useState(0);
-  
+  const [_, setFps] = useState(0);
+
   const smoothedAudioRef = useRef({
     bass: 0,
     mid: 0,
     high: 0
   });
-  
+
   useEffect(() => {
     if (!containerRef.current) return;
-    
-    const renderer = new THREE.WebGLRenderer({ 
+
+    const renderer = new THREE.WebGLRenderer({
       antialias: false,
       powerPreference: 'high-performance'
     });
@@ -200,14 +200,14 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
-    
+
     const scene = new THREE.Scene();
     sceneRef.current = scene;
-    
+
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
     camera.position.z = 1;
     cameraRef.current = camera;
-    
+
     const getColor = (index: number) => {
       if (config.colorMode === 'monochrome') {
         const color = new THREE.Color(config.baseColor);
@@ -215,11 +215,11 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
       }
       return new THREE.Color(
         index === 0 ? 0xff3b30 :
-        index === 1 ? 0x5856d6 :
-        0xff9500
+          index === 1 ? 0x5856d6 :
+            0xff9500
       );
     };
-    
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         iTime: { value: 0 },
@@ -237,25 +237,25 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
       fragmentShader: fluidFragmentShader
     });
     materialRef.current = material;
-    
+
     const geometry = new THREE.PlaneGeometry(2, 2);
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
-    
+
     const renderPass = new RenderPass(scene, camera);
-    
+
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(dimensions.width / 2, dimensions.height / 2),
       1.2,
       0.4,
       0.85
     );
-    
+
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
     composer.addPass(bloomPass);
     composerRef.current = composer;
-    
+
     return () => {
       cancelAnimationFrame(frameIdRef.current);
       geometry.dispose();
@@ -266,22 +266,21 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
       }
     };
   }, [dimensions.width, dimensions.height]);
-  
+
   useEffect(() => {
     let frameCount = 0;
     let lastTime = performance.now();
-    
-    const animate = (timestamp) => {
+
+    const animate = (timestamp: number) => {
       if (!composerRef.current || !materialRef.current) {
         frameIdRef.current = requestAnimationFrame(animate);
         return;
       }
-      
-      const deltaTime = Math.min(0.05, (timestamp - lastTime) / 1000);
+
       lastTime = timestamp;
-      
+
       timeRef.current += 0.01;
-      
+
       frameCount++;
       const now = performance.now();
       if (now - lastTime >= 1000) {
@@ -289,22 +288,22 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
         frameCount = 0;
         lastTime = now;
       }
-      
+
       const targetBass = Math.min(1.0, (audioData.bassEnergy || 0) * 1.2);
       const targetMid = Math.min(1.0, (audioData.midEnergy || 0) * 1.2);
       const targetHigh = Math.min(1.0, (audioData.highEnergy || 0) * 1.2);
-      
+
       const smoothingFactor = 0.04;
       const bassRiseFactor = 0.08;
       const bassFallFactor = 0.03;
-      
-      smoothedAudioRef.current.bass = targetBass > smoothedAudioRef.current.bass 
+
+      smoothedAudioRef.current.bass = targetBass > smoothedAudioRef.current.bass
         ? lerp(smoothedAudioRef.current.bass, targetBass, bassRiseFactor)
         : lerp(smoothedAudioRef.current.bass, targetBass, bassFallFactor);
-        
+
       smoothedAudioRef.current.mid = lerp(smoothedAudioRef.current.mid, targetMid, smoothingFactor);
       smoothedAudioRef.current.high = lerp(smoothedAudioRef.current.high, targetHigh, smoothingFactor);
-      
+
       if (materialRef.current) {
         materialRef.current.uniforms.iTime.value = timeRef.current;
         materialRef.current.uniforms.bassEnergy.value = smoothedAudioRef.current.bass;
@@ -313,22 +312,22 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
         materialRef.current.uniforms.sensitivity.value = config.sensitivity;
         materialRef.current.uniforms.motionIntensity.value = config.motionIntensity;
       }
-      
+
       composerRef.current.render();
-      
+
       frameIdRef.current = requestAnimationFrame(animate);
     };
-    
+
     frameIdRef.current = requestAnimationFrame(animate);
-    
+
     return () => {
       cancelAnimationFrame(frameIdRef.current);
     };
   }, [audioData, config.sensitivity, config.motionIntensity]);
-  
+
   useEffect(() => {
     if (!materialRef.current) return;
-    
+
     const getColor = (index: number) => {
       if (config.colorMode === 'monochrome') {
         const color = new THREE.Color(config.baseColor);
@@ -336,31 +335,31 @@ const FluxPattern: React.FC<FluxPatternProps> = ({
       }
       return new THREE.Color(
         index === 0 ? 0xff3b30 :
-        index === 1 ? 0x5856d6 :
-        0xff9500
+          index === 1 ? 0x5856d6 :
+            0xff9500
       );
     };
-    
+
     materialRef.current.uniforms.colorA.value = getColor(0);
     materialRef.current.uniforms.colorB.value = getColor(1);
     materialRef.current.uniforms.colorC.value = getColor(2);
   }, [config.colorMode, config.baseColor]);
-  
+
   useEffect(() => {
     const handleResize = () => {
       if (!rendererRef.current || !composerRef.current || !materialRef.current) return;
-      
+
       rendererRef.current.setSize(dimensions.width, dimensions.height);
       composerRef.current.setSize(dimensions.width, dimensions.height);
       materialRef.current.uniforms.iResolution.value = new THREE.Vector2(
         dimensions.width, dimensions.height
       );
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [dimensions]);
-  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
