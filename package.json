@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "sonovia",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,13 +11,11 @@
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-tooltip": "^1.2.6",
     "@react-three/drei": "^9.102.6",
     "@react-three/fiber": "^8.15.19",
     "@react-three/postprocessing": "^2.16.2",
     "@types/three": "^0.162.0",
     "clsx": "^2.1.0",
-    "express": "^4.18.3",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.344.0",
     "postprocessing": "^6.35.2",
