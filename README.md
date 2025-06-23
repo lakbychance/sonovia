@@ -1,7 +1,7 @@
 # Sonovia
 <img width="794" alt="Screenshot 2025-05-10 at 1 07 25 AM" src="https://github.com/user-attachments/assets/dbcd327f-55ab-4473-8156-4e1489b9f254" />
 
-Audio visualizer, vibe coded using Bolt.
+Audio visualizer, vibe coded using Bolt, Claude and Gemini 2.5 Pro.
 
 🎧 Upload your own tracks or pick from a few Suno demos, then choose from 10+ immersive visualizations that react in real time.
 
