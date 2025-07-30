@@ -18,6 +18,9 @@ import FluxPattern from './patterns/FluxPattern';
 import TerminalPattern from './patterns/TerminalPattern';
 import BeatJumperPattern from './patterns/BeatJumperPattern';
 import GitHubPattern from './patterns/GitHubPattern';
+import BlackholePattern from './patterns/BlackholePattern';
+import PongPattern from './patterns/PongPattern';
+import ClockPattern from './patterns/ClockPattern';
 import { getColorFromEnergy } from '../utils/colorUtils';
 import { Expand, Minimize, Play, Pause } from 'lucide-react';
 import clsx from 'clsx';
@@ -282,7 +285,16 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
             <BeatJumperPattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
           {visualizationMode === 'github' && (
-            <GitHubPattern audioData={audioData} config={config} dimensions={dimensions}  />
+            <GitHubPattern audioData={audioData} config={config} dimensions={dimensions} />
+          )}
+          {visualizationMode === 'pong' && (
+            <PongPattern audioData={audioData} dimensions={dimensions} config={config} />
+          )}
+          {visualizationMode === 'clock' && (
+            <ClockPattern audioData={audioData} dimensions={dimensions} config={config} />
+          )}
+          {visualizationMode === 'blackhole' && (
+            <BlackholePattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
         </div>
       )}

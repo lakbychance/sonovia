@@ -51,7 +51,10 @@ export type VisualizationMode =
   | 'flux'
   | 'terminal'
   | 'beatjumper'
-  | 'github';
+  | 'github'
+  | 'pong'
+  | 'clock'
+  | 'blackhole';
 
 export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
   circular: {
@@ -155,6 +158,24 @@ export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
     colorMode: 'monochrome',
     baseColor: '#9ae9a8',
     motionIntensity: 3.0
+  },
+  pong: {
+    sensitivity: 2.0,
+    colorMode: 'dynamic',
+    baseColor: '#ff3b30',
+    motionIntensity: 2.5
+  },
+  clock: {
+    sensitivity: 1.2,
+    colorMode: 'dynamic',
+    baseColor: '#ff3b30',
+    motionIntensity: 2.5
+  },
+  blackhole: {
+    sensitivity: 1.5,
+    colorMode: 'dynamic',
+    baseColor: '#ff3b30',
+    motionIntensity: 1.8
   }
 };
 

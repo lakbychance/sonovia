@@ -39,7 +39,7 @@ function AppShell() {
     };
 
     return (
-        <div className="h-[100dvh] bg-[#121212] text-white overflow-hidden flex flex-col">
+        <div className="min-h-[100dvh] bg-[#121212] text-white overflow-hidden flex flex-col">
             <div className="w-full relative mx-auto px-2 md:px-4 py-2 flex-1 flex flex-col">
                 <main className="flex-1 flex min-h-0">
                     <Visualizer

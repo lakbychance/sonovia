@@ -34,7 +34,10 @@ const visualizationOptions: { value: VisualizationMode; label: string }[] = [
   { value: 'flux', label: 'Flux' },
   { value: 'terminal', label: 'Terminal' },
   { value: 'beatjumper', label: 'Beat Jumper' },
-  { value: 'github', label: 'GitHub Graph' }
+  { value: 'github', label: 'GitHub Graph' },
+  { value: 'pong', label: 'Pong' },
+  { value: 'clock', label: 'Analog' },
+  { value: 'blackhole' as VisualizationMode, label: 'Black Hole' }
 ]
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({

@@ -54,6 +54,8 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
     handleChange('baseColor', newColor.hex);
   };
 
+  const disableColorModeList = ['flux', 'blackhole'];
+
   return (
     <motion.div
       role="dialog"
@@ -155,7 +157,7 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
           </div>
 
           {/* Color Mode */}
-          {visualizationMode !== 'flux' && (
+          {!disableColorModeList.includes(visualizationMode) && (
             <div className="space-y-2" role="radiogroup" aria-label="Color Mode">
               <label className="text-sm text-zinc-300">Color Mode</label>
               <div className="flex flex-wrap gap-2">
@@ -164,8 +166,8 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
                     key={mode}
                     onClick={() => handleChange('colorMode', mode as 'dynamic' | 'monochrome' | 'spectrum')}
                     className={`px-3 py-2 rounded-xl text-xs transition-all ${config.colorMode === mode
-                        ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg'
-                        : 'bg-zinc-800/80 text-zinc-400 hover:bg-orange-500/10 hover:text-orange-500 shadow-inner'
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg'
+                      : 'bg-zinc-800/80 text-zinc-400 hover:bg-orange-500/10 hover:text-orange-500 shadow-inner'
                       }`}
                     style={{
                       boxShadow: config.colorMode === mode
@@ -183,7 +185,7 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
           )}
 
           {/* Base Color */}
-          {config.colorMode === 'monochrome' && visualizationMode !== 'flux' && (
+          {config.colorMode === 'monochrome' && !disableColorModeList.includes(visualizationMode) && (
             <div className="space-y-2">
               <label id="color-picker-label" className="text-sm text-zinc-300">Base Color</label>
 
