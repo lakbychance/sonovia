@@ -6,7 +6,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { getColorFromEnergy } from '../../utils/colorUtils';
-import clsx from 'clsx';
+import CreditsComponent from '../CreditsComponent';
 
 interface BeatJumperPatternProps {
     audioData: AudioAnalysisData;
@@ -1017,17 +1017,11 @@ const BeatJumperPattern: React.FC<BeatJumperPatternProps> = ({
                     className="w-full h-full"
                 />
                 {/* Attribution Text */}
-                <a
+                <CreditsComponent
                     href="https://x.com/majidmanzarpour/status/1922123239670563284"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className={clsx("absolute top-2 right-2 lg:left-2 lg:right-auto text-xs text-white/90 p-2 rounded-xl z-10 bg-gradient-to-r from-black/10 via-zinc-900 to-white/10 border border-zinc-700/80 backdrop-blur-sm transition-all duration-400 hover:text-orange-500 hover:bg-gradient-to-r hover:from-orange-500/10 hover:via-orange-400/10 hover:to-orange-300/10 hover:border-orange-500/50",
-                        showControls ? "opacity-100" : "opacity-0"
-                    )}
-                >
-                    Adapted from @majidmanzarpour
-                </a>
+                    label="Adapted from @majidmanzarpour"
+                    show={Boolean(showControls)}
+                />
                 {/* Bottom Faded Mask Overlay */}
                 <div
                     className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none"

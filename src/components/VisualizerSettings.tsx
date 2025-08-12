@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Settings, X } from 'lucide-react';
 import { ColorPicker, useColor } from 'react-color-palette';
+import type { IColor } from 'react-color-palette';
 import "react-color-palette/dist/css/rcp.css";
 import { VisualizationConfig, VisualizationMode, defaultConfigs } from '../types/audio';
 
@@ -49,12 +50,12 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
     });
   };
 
-  const handleColorChange = (newColor: { hex: string }) => {
+  const handleColorChange = (newColor: IColor) => {
     setColor(newColor);
     handleChange('baseColor', newColor.hex);
   };
 
-  const disableColorModeList = ['flux', 'blackhole'];
+  const disableColorModeList = ['flux', 'blackhole', 'wormhole'];
 
   return (
     <motion.div
@@ -156,48 +157,22 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
             </div>
           </div>
 
-          {/* Color Mode */}
-          {!disableColorModeList.includes(visualizationMode) && (
-            <div className="space-y-2" role="radiogroup" aria-label="Color Mode">
-              <label className="text-sm text-zinc-300">Color Mode</label>
-              <div className="flex flex-wrap gap-2">
-                {(visualizationMode === 'github' ? ['monochrome', 'spectrum'] : ['dynamic', 'monochrome', 'spectrum']).map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() => handleChange('colorMode', mode as 'dynamic' | 'monochrome' | 'spectrum')}
-                    className={`px-3 py-2 rounded-xl text-xs transition-all ${config.colorMode === mode
-                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg'
-                      : 'bg-zinc-800/80 text-zinc-400 hover:bg-orange-500/10 hover:text-orange-500 shadow-inner'
-                      }`}
-                    style={{
-                      boxShadow: config.colorMode === mode
-                        ? '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2)'
-                        : 'inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(255, 255, 255, 0.05)'
-                    }}
-                    role="radio"
-                    aria-checked={config.colorMode === mode}
-                  >
-                    {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Color Mode options removed per requirement */}
 
           {/* Base Color */}
           {config.colorMode === 'monochrome' && !disableColorModeList.includes(visualizationMode) && (
             <div className="space-y-2">
               <label id="color-picker-label" className="text-sm text-zinc-300">Base Color</label>
 
-              <ColorPicker
-                width={240}
-                height={150}
-                color={color}
-                onChange={handleColorChange}
-                hideInput
-                hideAlpha
-                aria-labelledby="color-picker-label"
-              />
+              <div style={{ width: 240 }}>
+                <ColorPicker
+                  color={color}
+                  onChange={handleColorChange}
+                  hideInput
+                  hideAlpha
+                  aria-labelledby="color-picker-label"
+                />
+              </div>
 
             </div>
           )}

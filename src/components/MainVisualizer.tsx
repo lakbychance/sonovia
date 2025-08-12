@@ -19,6 +19,7 @@ import TerminalPattern from './patterns/TerminalPattern';
 import BeatJumperPattern from './patterns/BeatJumperPattern';
 import GitHubPattern from './patterns/GitHubPattern';
 import BlackholePattern from './patterns/BlackholePattern';
+import WormholePattern from './patterns/WormholePattern.tsx';
 import PongPattern from './patterns/PongPattern';
 import ClockPattern from './patterns/ClockPattern';
 import { getColorFromEnergy } from '../utils/colorUtils';
@@ -295,6 +296,9 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
           )}
           {visualizationMode === 'blackhole' && (
             <BlackholePattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
+          )}
+          {visualizationMode === 'wormhole' && (
+            <WormholePattern audioData={audioData} dimensions={dimensions} config={config} />
           )}
         </div>
       )}
