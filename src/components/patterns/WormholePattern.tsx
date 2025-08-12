@@ -9,12 +9,13 @@ interface WormholePatternProps {
     audioData: AudioAnalysisData;
     dimensions: { width: number; height: number };
     config: VisualizationConfig;
+    showControls: boolean;
 }
 
 // Linear interpolation helper
 const lerp = (start: number, end: number, factor: number) => start * (1 - factor) + end * factor;
 
-const WormholePattern: React.FC<WormholePatternProps> = ({ audioData, dimensions, config }) => {
+const WormholePattern: React.FC<WormholePatternProps> = ({ audioData, dimensions, config, showControls }) => {
     const mountRef = useRef<HTMLDivElement>(null);
 
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -225,7 +226,7 @@ const WormholePattern: React.FC<WormholePatternProps> = ({ audioData, dimensions
             style={{ background: '#000000' }}
         >
             <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
-            <CreditsComponent href="https://www.youtube.com/watch?v=Il_GKGFggWY" label="Adapted from @bobbyroe" show={true} />
+            <CreditsComponent href="https://www.youtube.com/watch?v=Il_GKGFggWY" label="Adapted from @bobbyroe" show={showControls} />
         </motion.div>
     );
 };

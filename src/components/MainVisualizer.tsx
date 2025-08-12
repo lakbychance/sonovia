@@ -298,7 +298,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
             <BlackholePattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
           {visualizationMode === 'wormhole' && (
-            <WormholePattern audioData={audioData} dimensions={dimensions} config={config} />
+            <WormholePattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
         </div>
       )}
