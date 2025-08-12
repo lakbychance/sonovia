@@ -182,7 +182,7 @@ export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
     sensitivity: 1.2,
     colorMode: 'dynamic',
     baseColor: '#7dd3fc',
-    motionIntensity: 1.0
+    motionIntensity: 1.5
   }
 };
 
