@@ -179,7 +179,7 @@ export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
     motionIntensity: 1.8
   },
   wormhole: {
-    sensitivity: 1.2,
+    sensitivity: 1.5,
     colorMode: 'dynamic',
     baseColor: '#7dd3fc',
     motionIntensity: 1.5
