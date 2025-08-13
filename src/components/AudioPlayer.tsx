@@ -39,6 +39,7 @@ const visualizationOptions: { value: VisualizationMode; label: string }[] = [
   { value: 'clock', label: 'Analog' },
   { value: 'blackhole' as VisualizationMode, label: 'Black Hole' },
   { value: 'wormhole' as VisualizationMode, label: 'Wormhole' },
+  { value: 'organic' as VisualizationMode, label: 'Organic' },
 ]
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({

@@ -55,7 +55,8 @@ export type VisualizationMode =
   | 'pong'
   | 'clock'
   | 'blackhole'
-  | 'wormhole';
+  | 'wormhole'
+  | 'organic';
 
 export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
   circular: {
@@ -183,6 +184,12 @@ export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
     colorMode: 'dynamic',
     baseColor: '#7dd3fc',
     motionIntensity: 1.5
+  },
+  organic: {
+    sensitivity: 0.8,
+    colorMode: 'dynamic',
+    baseColor: '#7dd3fc',
+    motionIntensity: 1.8
   }
 };
 

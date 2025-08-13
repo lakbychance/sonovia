@@ -22,6 +22,7 @@ import BlackholePattern from './patterns/BlackholePattern';
 import WormholePattern from './patterns/WormholePattern.tsx';
 import PongPattern from './patterns/PongPattern';
 import ClockPattern from './patterns/ClockPattern';
+import OrganicPattern from './patterns/OrganicPattern';
 import { getColorFromEnergy } from '../utils/colorUtils';
 import { Expand, Minimize, Play, Pause } from 'lucide-react';
 import clsx from 'clsx';
@@ -299,6 +300,9 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
           )}
           {visualizationMode === 'wormhole' && (
             <WormholePattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
+          )}
+          {visualizationMode === 'organic' && (
+            <OrganicPattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
         </div>
       )}
