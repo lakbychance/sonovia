@@ -56,7 +56,8 @@ export type VisualizationMode =
   | 'clock'
   | 'blackhole'
   | 'wormhole'
-  | 'organic';
+  | 'organic'
+  | 'origami';
 
 export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
   circular: {
@@ -189,6 +190,12 @@ export const defaultConfigs: Record<VisualizationMode, VisualizationConfig> = {
     sensitivity: 0.8,
     colorMode: 'dynamic',
     baseColor: '#7dd3fc',
+    motionIntensity: 1.8
+  },
+  origami: {
+    sensitivity: 0.8,
+    colorMode: 'dynamic',
+    baseColor: '#8b5cf6',
     motionIntensity: 1.8
   }
 };

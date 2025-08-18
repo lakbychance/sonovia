@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AudioAnalysisData, VisualizationMode, VisualizationConfig } from '../types/audio';
 import CircularPattern from './patterns/CircularPattern';
@@ -23,6 +23,7 @@ import WormholePattern from './patterns/WormholePattern.tsx';
 import PongPattern from './patterns/PongPattern';
 import ClockPattern from './patterns/ClockPattern';
 import OrganicPattern from './patterns/OrganicPattern';
+import OrigamiPattern from './patterns/OrigamiPattern.tsx';
 import { getColorFromEnergy } from '../utils/colorUtils';
 import { Expand, Minimize, Play, Pause } from 'lucide-react';
 import clsx from 'clsx';
@@ -56,7 +57,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
   const clickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isMicMode = audioData.isMicMode;
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     if (timeoutRef.current) {
       window.clearTimeout(timeoutRef.current);
     }
@@ -67,7 +68,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
         setShowControls(false);
       }, 3000);
     }
-  };
+  }, [hasSelectedFile, showSettings]);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -99,7 +100,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
     } else {
       resetTimer();
     }
-  }, [showSettings, hasSelectedFile]);
+  }, [showSettings, hasSelectedFile, resetTimer]);
 
   useEffect(() => {
     if (audioData.isPlaying !== lastPlayingStateRef.current) {
@@ -108,7 +109,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
         resetTimer();
       }
     }
-  }, [audioData.isPlaying]);
+  }, [audioData.isPlaying, resetTimer]);
 
   const toggleFullscreen = async () => {
     if (!document.fullscreenElement) {
@@ -237,7 +238,7 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
           </motion.div>
         </div>
       ) : (
-        <div onClick={onPatternAreaClick} onDoubleClick={onPatternAreaDoubleClick}>
+        <div className="w-full h-full" onClick={onPatternAreaClick} onDoubleClick={onPatternAreaDoubleClick}>
           {visualizationMode === 'circular' && (
             <CircularPattern audioData={audioData} dimensions={dimensions} config={config} />
           )}
@@ -303,6 +304,9 @@ const MainVisualizer: React.FC<MainVisualizerProps> = ({
           )}
           {visualizationMode === 'organic' && (
             <OrganicPattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
+          )}
+          {visualizationMode === 'origami' && (
+            <OrigamiPattern audioData={audioData} dimensions={dimensions} config={config} showControls={showControls} />
           )}
         </div>
       )}

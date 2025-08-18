@@ -55,7 +55,7 @@ const VisualizerSettings: React.FC<VisualizerSettingsProps> = ({
     handleChange('baseColor', newColor.hex);
   };
 
-  const disableColorModeList = ['flux', 'blackhole', 'wormhole', 'organic'];
+  const disableColorModeList = ['flux', 'blackhole', 'wormhole', 'organic', 'origami'];
 
   return (
     <motion.div

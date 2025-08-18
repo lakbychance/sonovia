@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Play, Pause, Volume2, VolumeX, Settings, ChevronDown } from 'lucide-react';
 import * as Select from '@radix-ui/react-select';
+import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { AudioAnalysisData, VisualizationMode } from '../types/audio';
 import { isSafariBrowser } from '../utils/userAgent';
 
@@ -40,6 +41,7 @@ const visualizationOptions: { value: VisualizationMode; label: string }[] = [
   { value: 'blackhole' as VisualizationMode, label: 'Black Hole' },
   { value: 'wormhole' as VisualizationMode, label: 'Wormhole' },
   { value: 'organic' as VisualizationMode, label: 'Organic' },
+  { value: 'origami' as VisualizationMode, label: 'Origami' },
 ]
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
@@ -208,17 +210,27 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255, 255, 255, 0.05)'
                 }}
               >
-                <Select.Viewport className="p-1">
-                  {visualizationOptions.map((option) => (
-                    <Select.Item
-                      key={option.value}
-                      value={option.value}
-                      className="text-zinc-200 text-xs md:text-sm px-3 py-1.5 rounded-lg outline-none cursor-pointer data-[highlighted]:bg-orange-500/10 data-[state=checked]:text-orange-500"
-                    >
-                      <Select.ItemText>{option.label}</Select.ItemText>
-                    </Select.Item>
-                  ))}
-                </Select.Viewport>
+                <ScrollArea.Root className="w-full h-full" type="auto">
+                  <ScrollArea.Viewport className="w-full h-full" style={{ maxHeight: '500px' }}>
+                    <Select.Viewport className="p-1">
+                      {visualizationOptions.map((option) => (
+                        <Select.Item
+                          key={option.value}
+                          value={option.value}
+                          className="text-zinc-200 text-xs md:text-sm px-3 py-1.5 rounded-lg outline-none cursor-pointer data-[highlighted]:bg-orange-500/10 data-[state=checked]:text-orange-500"
+                        >
+                          <Select.ItemText>{option.label}</Select.ItemText>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                  </ScrollArea.Viewport>
+                  <ScrollArea.Scrollbar
+                    className="flex select-none touch-none p-0.5 bg-zinc-900/50 transition-colors duration-[160ms] ease-out hover:bg-zinc-900/80 data-[orientation=vertical]:w-2.5"
+                    orientation="vertical"
+                  >
+                    <ScrollArea.Thumb className="flex-1 bg-zinc-700 rounded-[10px] relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
+                  </ScrollArea.Scrollbar>
+                </ScrollArea.Root>
               </Select.Content>
 
             </Select.Root>
